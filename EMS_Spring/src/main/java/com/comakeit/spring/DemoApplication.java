@@ -10,7 +10,6 @@ import com.comakeit.spring.constants.Constant;
 public class DemoApplication {
 
 	public static void main(String[] args) {
-//		SpringApplication.run(DemoApplication.class, args);
 		ConfigurableApplicationContext ctx = SpringApplication.run(DemoApplication.class, args);
 		String serverPort = ctx.getEnvironment().getProperty("server.port");
 		Constant.url = "http://localhost:" + serverPort ;

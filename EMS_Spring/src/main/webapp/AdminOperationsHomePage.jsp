@@ -94,7 +94,7 @@ tr {
 			</div>
 			<div class="hrefs">
 				<a
-					href="AdminOperationsHomePage.jsp?action=viewEmployeesofSpecificManager">View
+					href="AdminOperationsHomePage.jsp?action=viewEmployeesOfManager">View
 					Employees of specific Manager</a>
 			</div>
 			<div class="hrefs">
@@ -175,7 +175,7 @@ tr {
 
 
 			<%
-				} else if (action.equals("viewEmployeesofSpecificManager")) {
+				} else if (action.equals("viewEmployeesOfManager")) {
 			%>
 			<form action="viewEmployeesOfManager" method="post">
 				<p>Enter the Reporting Manager:</p>
@@ -222,16 +222,17 @@ tr {
 				String error = request.getParameter("error");
 				if (error != null) {
 					if (error.equals("create")) {
-						out.println("<h3>Error in adding employee!!!</h3>");
-						out.println("<a href=\"AdminOperationsHomePage.jsp\">Go Back</a> ");
+						out.println("<h3>Failed in adding employee!!!</h3>");
 					} else if (error.equals("delete")) {
-						out.println("<h4>Error in Deletion</h4>");
+						out.println("<h3>Unable to delete or employee not found</h3>");
+					} else if (error.equals("viewEmployees")) {
+						out.println("<h3>No Employees Found</h3>");
 					} else if (error.equals("viewEmployeesOfManager")) {
-						out.println("<h4>Enter valid Manager name</h4>");
+						out.println("<h3>Enter valid Manager name</h3>");
 					} else if (error.equals("viewEmployeeDetails")) {
-						out.println("<h4>No Employee Found!!</h4>");
+						out.println("<h3>No Employee Found!!</h3>");
 					} else if (error.equals("listEmployeesBySalary")) {
-						out.println("<h4>No Employees Found!!</h4>");
+						out.println("<h3>No Employees Found!!</h3>");
 					}
 				}
 			%>

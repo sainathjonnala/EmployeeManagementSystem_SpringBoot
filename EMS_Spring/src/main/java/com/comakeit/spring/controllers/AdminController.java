@@ -63,15 +63,23 @@ public class AdminController {
 			return modelView;
 		}
 
-		return new ModelAndView("forward:AdminOperationsHomePage.jsp?error=create");
+		return new ModelAndView("AdminOperationsHomePage.jsp?error=create");
 	}
 
 	@RequestMapping("/deleteEmployee")
 	@PostMapping
 	public ModelAndView deleteEmployee(EmployeeEntity employee) {
 		restTemplate = new RestTemplate();
-		restTemplate.delete(Constant.url + "/EMS/removeEmployee/" + employee.getEmployee_id() + "/");
-		return new ModelAndView("AdminOperationsHomePage.jsp");
+		employee = restTemplate.postForObject(Constant.url + "/EMS/viewEmployeeDetails", employee,
+				EmployeeEntity.class);
+		if (employee != null) {
+
+			restTemplate.delete(Constant.url + "/EMS/removeEmployee/" + employee.getEmployee_id() + "/");
+			modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=deleted");
+			modelView.addObject("employee", employee);
+		}
+		modelView = new ModelAndView("AdminOperationsHomePage.jsp?error=delete");
+		return modelView;
 	}
 
 	@RequestMapping("/viewEmployees")
@@ -84,7 +92,7 @@ public class AdminController {
 				});
 
 		if (employeesList != null) {
-			modelView = new ModelAndView("forward:AdminOperationsHomePage.jsp?result=viewEmployees");
+			modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=viewEmployees");
 			modelView.addObject("employeesList", employeesList.getBody());
 			return modelView;
 		}
@@ -101,7 +109,7 @@ public class AdminController {
 				});
 
 		if (departmentsList != null) {
-			modelView = new ModelAndView("forward:AdminOperationsHomePage.jsp?result=viewDepartments");
+			modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=viewDepartments");
 			modelView.addObject("departmentsList", departmentsList.getBody());
 			return modelView;
 		}
@@ -117,11 +125,11 @@ public class AdminController {
 				EmployeeEntity.class);
 		if (employee != null) {
 			employee.setPF(employee.getSalary() * (0.05));
-			modelView = new ModelAndView("forward:AdminOperationsHomePage.jsp?result=employeeDetails");
+			modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=employeeDetails");
 			modelView.addObject("employee", employee);
 			return modelView;
 		}
-		return new ModelAndView("AdminOperationsHomePage.jsp?error=viewEmployeeDetails");
+		return new ModelAndView("AdminOperationsHomePage.jsp?action=viewEmployeeDetails&error=viewEmployeeDetails");
 	}
 
 	@RequestMapping("/viewEmployeesOfManager")
@@ -133,12 +141,13 @@ public class AdminController {
 				managerEntity, new ParameterizedTypeReference<List<EmployeeEntity>>() {
 				});
 		if (employeesList.getBody() != null) {
-			modelView = new ModelAndView("forward:AdminOperationsHomePage.jsp?result=viewEmployeesOfManager");
+			modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=viewEmployeesOfManager");
 			modelView.addObject("manager_id", manager_id);
 			modelView.addObject("employeesList", employeesList.getBody());
 			return modelView;
 		}
-		modelView = new ModelAndView("forward:AdminOperationsHomePage.jsp?error=viewEmployeesOfManager");
+		modelView = new ModelAndView(
+				"AdminOperationsHomePage.jsp?action=viewEmployeesOfManager&error=viewEmployeesOfManager");
 		return modelView;
 	}
 
@@ -152,12 +161,14 @@ public class AdminController {
 				null, new ParameterizedTypeReference<List<EmployeeEntity>>() {
 				});
 
-		if (employeesList != null) {
-			modelView = new ModelAndView("forward:AdminOperationsHomePage.jsp?result=listEmployeesBySalary");
+		if (employeesList.getBody() != null) {
+			modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=listEmployeesBySalary");
 			modelView.addObject("employeesList", employeesList.getBody());
 			return modelView;
 		}
-		return null;
+		modelView = new ModelAndView(
+				"AdminOperationsHomePage.jsp?action=listEmployeesBySalary&error=listEmployeesBySalary");
+		return modelView;
 	}
 
 	public static String createUsername() {

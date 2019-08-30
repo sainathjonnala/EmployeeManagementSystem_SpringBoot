@@ -34,8 +34,8 @@ public class AdminService {
 	}
 
 	public String removeEmployee(String employee_id) {
-		EmployeeEntity employee = employeeRepository.findById(employee_id).get();
-		if (employeeRepository.existsById(employee.getEmployee_id())) {
+		if (employeeRepository.existsById(employee_id)) {
+			EmployeeEntity employee = employeeRepository.findById(employee_id).get();
 			List<LeaveEntity> leavesList = leaveRepository.findAll();
 			for (LeaveEntity iterator : leavesList) {
 				if (iterator.getEmployee().getEmployee_id().equals(employee.getEmployee_id())) {
