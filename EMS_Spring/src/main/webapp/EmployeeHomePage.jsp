@@ -33,12 +33,13 @@ tr:nth-child(even) {
 
 	<%
 		EmployeeEntity employee = (EmployeeEntity) session.getAttribute("employee");
-		List<LeaveEntity> leavesList = (List<LeaveEntity>) session.getAttribute("leavesList");
+		List<LeaveEntity> leavesList = (List<LeaveEntity>) request.getAttribute("leavesList");
 		String role = employee.getLogin().getRole().getRole_name();
 		if (role.equals("employee")) {
 	%>
 	<div class="link" style="color: blue;">
-		<%="<h2>Welcome Employee: " + employee.getEmployee_id() + " </h2>"%>
+		<%="<h2>Welcome Employee: " + employee.getEmployee_id() + " " + employee.getLast_name()
+						+ employee.getFirst_name() + " </h2>"%>
 		<%="Reporting to : " + employee.getManager_id()%>
 	</div>
 	<div class="link" style="color: black;">
@@ -60,10 +61,10 @@ tr:nth-child(even) {
 		<a href="EmployeeHomePage.jsp?action=apply">Apply For Leave</a>
 	</div>
 	<div class="link" style="color: red;">
-		<a href="viewLeaveBalance">View My Leave Balance </a>
+		<a href="/viewLeaveBalance">View My Leave Balance </a>
 	</div>
 	<div class="link" style="color: red;">
-		<a href="/viewLeaves">View My Leave Details </a>
+		<a href="/viewLeaves">View My Leaves </a>
 	</div>
 	<div class="link" style="color: red;">
 		<a href="/viewAppliedLeaves">Cancel Leave </a>

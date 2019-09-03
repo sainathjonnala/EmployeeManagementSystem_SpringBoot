@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,7 +23,6 @@ import com.comakeit.spring.entities.LeaveBalanceEntity;
 import com.comakeit.spring.entities.LeaveEntity;
 
 @Controller
-@SessionAttributes({ "leavesList" })
 public class LeaveController {
 
 	RestTemplate restTemplate;

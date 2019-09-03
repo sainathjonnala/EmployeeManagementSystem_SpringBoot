@@ -11,7 +11,6 @@ import com.comakeit.spring.entities.LeaveEntity;
 import com.comakeit.spring.repositories.DepartmentRepository;
 import com.comakeit.spring.repositories.EmployeeRepository;
 import com.comakeit.spring.repositories.LeaveRepository;
-import com.comakeit.spring.repositories.LoginRepository;
 
 @Service
 public class AdminService {

@@ -25,7 +25,7 @@ public interface LeaveRepository extends JpaRepository<LeaveEntity, String> {
 	@Query("select l from LeaveEntity l where l.employee.manager_id =:manager_id AND l.status='pending'")
 	public List<LeaveEntity> getLeaveRequests(@Param("manager_id") String manager_id);
 
-	@Query("select l from LeaveEntity l where l.employee.employee_id =:employee_id AND status='pending' OR status='approved' ")
+	@Query("select l from LeaveEntity l where l.employee.employee_id =:employee_id AND (l.status='pending' OR l.status='approved')")
 	public List<LeaveEntity> getAppliedLeavesOfEmployee(@Param("employee_id") String employee_id);
 
 }

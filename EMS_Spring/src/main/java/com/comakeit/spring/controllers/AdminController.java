@@ -119,15 +119,17 @@ public class AdminController {
 	@RequestMapping("/viewEmployeeDetails")
 	@PostMapping
 	public ModelAndView viewEmployeeDetails(EmployeeEntity employee) {
-		restTemplate = new RestTemplate();
-
-		employee = restTemplate.postForObject(Constant.url + "/EMS/viewEmployeeDetails", employee,
-				EmployeeEntity.class);
 		if (employee != null) {
-			employee.setPF(employee.getSalary() * (0.05));
-			modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=employeeDetails");
-			modelView.addObject("employee", employee);
-			return modelView;
+			restTemplate = new RestTemplate();
+
+			employee = restTemplate.postForObject(Constant.url + "/EMS/viewEmployeeDetails", employee,
+					EmployeeEntity.class);
+			if (employee != null) {
+				employee.setPF(employee.getSalary() * (0.05));
+				modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=employeeDetails");
+				modelView.addObject("employee", employee);
+				return modelView;
+			}
 		}
 		return new ModelAndView("AdminOperationsHomePage.jsp?action=viewEmployeeDetails&error=viewEmployeeDetails");
 	}
@@ -135,16 +137,19 @@ public class AdminController {
 	@RequestMapping("/viewEmployeesOfManager")
 	@PostMapping
 	public ModelAndView viewEmploeesOfManager(@RequestParam("manager_id") String manager_id) {
-		restTemplate = new RestTemplate();
-		HttpEntity<String> managerEntity = new HttpEntity<String>(manager_id);
-		employeesList = restTemplate.exchange(Constant.url + "/EMS/viewEmployeesOfManager", HttpMethod.POST,
-				managerEntity, new ParameterizedTypeReference<List<EmployeeEntity>>() {
-				});
-		if (employeesList.getBody() != null) {
-			modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=viewEmployeesOfManager");
-			modelView.addObject("manager_id", manager_id);
-			modelView.addObject("employeesList", employeesList.getBody());
-			return modelView;
+
+		if (!manager_id.equals("")) {
+			restTemplate = new RestTemplate();
+			HttpEntity<String> managerEntity = new HttpEntity<String>(manager_id);
+			employeesList = restTemplate.exchange(Constant.url + "/EMS/viewEmployeesOfManager", HttpMethod.POST,
+					managerEntity, new ParameterizedTypeReference<List<EmployeeEntity>>() {
+					});
+			if (employeesList.getBody() != null) {
+				modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=viewEmployeesOfManager");
+				modelView.addObject("manager_id", manager_id);
+				modelView.addObject("employeesList", employeesList.getBody());
+				return modelView;
+			}
 		}
 		modelView = new ModelAndView(
 				"AdminOperationsHomePage.jsp?action=viewEmployeesOfManager&error=viewEmployeesOfManager");
@@ -161,7 +166,7 @@ public class AdminController {
 				null, new ParameterizedTypeReference<List<EmployeeEntity>>() {
 				});
 
-		if (employeesList.getBody() != null) {
+		if (!employeesList.getBody().isEmpty()) {
 			modelView = new ModelAndView("AdminOperationsHomePage.jsp?result=listEmployeesBySalary");
 			modelView.addObject("employeesList", employeesList.getBody());
 			return modelView;
