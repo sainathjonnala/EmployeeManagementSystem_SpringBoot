@@ -97,7 +97,7 @@ tr:nth-child(even) {
 		<a href="/viewLeaveRequests">View Leave Requests</a>
 	</div>
 	<div class="link" style="color: red;">
-		<a href="viewLeaveBalance">View My Leave Balance </a>
+		<a href="/viewLeaveBalance">View My Leave Balance </a>
 	</div>
 	<div class="link" style="color: red;">
 		<a href="/viewLeaves">View My Leaves </a>

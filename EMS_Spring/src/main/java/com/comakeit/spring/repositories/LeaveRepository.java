@@ -19,13 +19,13 @@ public interface LeaveRepository extends JpaRepository<LeaveEntity, String> {
 	public List<LeaveEntity> getLeavesOfaMonth(@Param("employee_id") String employee_id,
 			@Param("start_month") int start_month, @Param("end_month") int end_month);
 
-	@Query("select l from LeaveEntity l where l.employee.employee_id =:employee_id")
+	@Query("select l from LeaveEntity l where l.employee.employee_id =:employee_id ORDER BY l.from_date")
 	public List<LeaveEntity> getLeavesOfEmployee(@Param("employee_id") String employee_id);
 
-	@Query("select l from LeaveEntity l where l.employee.manager_id =:manager_id AND l.status='pending'")
+	@Query("select l from LeaveEntity l where l.employee.manager_id =:manager_id AND l.status='pending' ORDER BY l.from_date")
 	public List<LeaveEntity> getLeaveRequests(@Param("manager_id") String manager_id);
 
-	@Query("select l from LeaveEntity l where l.employee.employee_id =:employee_id AND (l.status='pending' OR l.status='approved')")
+	@Query("select l from LeaveEntity l where l.employee.employee_id =:employee_id AND (l.status='pending' OR l.status='approved') ORDER BY l.from_date")
 	public List<LeaveEntity> getAppliedLeavesOfEmployee(@Param("employee_id") String employee_id);
 
 }

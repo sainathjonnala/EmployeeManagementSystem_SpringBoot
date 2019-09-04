@@ -32,14 +32,14 @@ public class EmployeeLeaveService {
 		}
 		int leave_balance_count;
 		if (leave.getLeave_type().equals("casual")) {
-			leave_balance_count = leave.getEmployee().getLeave_balance().getCasual_leaves();
+			leave_balance_count = leaveBalance.getCasual_leaves();
 			if (leave_balance_count >= 1 && duration <= leave_balance_count) {
 				leaveBalance.setCasual_leaves(leave_balance_count - duration);
 				leaveRepository.save(leave);
 				return true;
 			}
 		} else if (leave.getLeave_type().equals("loss_of_pay")) {
-			leave_balance_count = leave.getEmployee().getLeave_balance().getLoss_of_pay();
+			leave_balance_count = leaveBalance.getLoss_of_pay();
 			if (leave_balance_count >= 1 && duration <= leave_balance_count) {
 				leavesList = leaveRepository.getLeavesOfaMonth(leave.getEmployee().getEmployee_id(),
 						leave.getFrom_date().getMonthValue(), leave.getTo_date().getMonthValue());
@@ -83,13 +83,13 @@ public class EmployeeLeaveService {
 		leaveBalance = leaveBalanceRepository.findById(leave.getEmployee().getLeave_balance().getId()).get();
 		int leave_balance_count;
 		if (leave.getLeave_type().equals("casual")) {
-			leave_balance_count = leave.getEmployee().getLeave_balance().getCasual_leaves();
+			leave_balance_count = leaveBalance.getCasual_leaves();
 			leaveBalance.setCasual_leaves(leave_balance_count + duration);
 			leave.setStatus("rejected");
 			leaveRepository.save(leave);
 			return true;
 		} else if (leave.getLeave_type().equals("loss_of_pay")) {
-			leave_balance_count = leave.getEmployee().getLeave_balance().getLoss_of_pay();
+			leave_balance_count = leaveBalance.getLoss_of_pay();
 			leaveBalance.setLoss_of_pay(leave_balance_count + duration);
 			leave.setStatus("rejected");
 			leaveRepository.save(leave);
@@ -110,14 +110,14 @@ public class EmployeeLeaveService {
 		int leave_balance_count;
 
 		if (leave.getLeave_type().equals("casual")) {
-			leave_balance_count = leave.getEmployee().getLeave_balance().getCasual_leaves();
+			leave_balance_count = leaveBalance.getCasual_leaves();
 			leaveBalance.setCasual_leaves(leave_balance_count + duration);
 			leave.setStatus("cancelled");
 			leaveBalanceRepository.save(leaveBalance);
 			leaveRepository.save(leave);
 			return true;
 		} else if (leave.getLeave_type().equals("loss_of_pay")) {
-			leave_balance_count = leave.getEmployee().getLeave_balance().getLoss_of_pay();
+			leave_balance_count = leaveBalance.getLoss_of_pay();
 			leaveBalance.setLoss_of_pay(leave_balance_count + duration);
 			leave.setStatus("cancelled");
 			leaveBalanceRepository.save(leaveBalance);
