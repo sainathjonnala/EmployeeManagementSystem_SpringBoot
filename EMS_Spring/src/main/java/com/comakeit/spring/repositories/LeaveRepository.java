@@ -15,7 +15,7 @@ public interface LeaveRepository extends JpaRepository<LeaveEntity, String> {
 	@Query("select l from LeaveEntity l where l.employee.employee_id =: employee_id")
 	public String removeLeavesOfEmployee(@Param("employee_id") String employee_id);
 
-	@Query("select l from LeaveEntity l where l.employee.employee_id=:employee_id AND l.status='approved' OR l.status='pending' AND MONTH(l.from_date)=:start_month AND MONTH(l.to_date)=:end_month")
+	@Query("select l from LeaveEntity l where l.employee.employee_id=:employee_id AND (l.status='approved' OR l.status='pending')AND l.leave_type='loss_of_pay' AND (MONTH(l.from_date)=:start_month OR MONTH(l.to_date)=:end_month)")
 	public List<LeaveEntity> getLeavesOfaMonth(@Param("employee_id") String employee_id,
 			@Param("start_month") int start_month, @Param("end_month") int end_month);
 

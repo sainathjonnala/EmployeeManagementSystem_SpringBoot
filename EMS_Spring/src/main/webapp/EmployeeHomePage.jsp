@@ -38,7 +38,7 @@ tr:nth-child(even) {
 		if (role.equals("employee")) {
 	%>
 	<div class="link" style="color: blue;">
-		<%="<h2>Welcome Employee: " + employee.getEmployee_id() + " " + employee.getLast_name()
+		<%="<h2>Welcome Employee: " + employee.getEmployee_id() + " " + employee.getLast_name() + " "
 						+ employee.getFirst_name() + " </h2>"%>
 		<%="Reporting to : " + employee.getManager_id()%>
 	</div>
@@ -79,7 +79,8 @@ tr:nth-child(even) {
 	<div class="link" style="color: blue;">
 		<%
 			String message = request.getParameter("message");
-				out.println("<h2>Welcome Manager: " + employee.getEmployee_id() + " </h2>");
+				out.println("<h2>Welcome Manager: " + employee.getEmployee_id() + " " + employee.getLast_name() + " "
+						+ employee.getFirst_name() + " </h2>");
 				out.println("<h3>Reporting To: " + employee.getManager_id() + "</h3>");
 				if (message != null) {
 					if (message.equals("success"))
@@ -112,7 +113,8 @@ tr:nth-child(even) {
 		} else if (role.equals("manager")) {
 	%>
 	<div class="link" style="color: blue;">
-		<%="<h2>Welcome Manager: " + employee.getEmployee_id() + " </h2>"%>
+		<%="<h2>Welcome Manager: " + employee.getEmployee_id() + " " + employee.getLast_name() + " "
+						+ employee.getFirst_name() + " </h2>"%>
 	</div>
 	<div class="link" style="color: black;">
 		<h2>Choose from below operations:</h2>
@@ -175,6 +177,7 @@ tr:nth-child(even) {
 			<th>employee-Id</th>
 			<th>name</th>
 			<th>leave-id</th>
+			<th>leave type</th>
 			<th>from_date</th>
 			<th>to_date</th>
 			<th>reason</th>
@@ -187,6 +190,7 @@ tr:nth-child(even) {
 						out.println("<td>" + iterator.getEmployee().getLast_name()
 								+ iterator.getEmployee().getFirst_name() + "</td>");
 						out.println("<td>" + iterator.getLeave_id() + "</td>");
+						out.println("<td>" + iterator.getLeave_type() + "</td>");
 						out.println("<td>" + iterator.getFrom_date() + "</td>");
 						out.println("<td>" + iterator.getTo_date() + "</td>");
 						out.println("<td>" + iterator.getReason() + "</td>");
@@ -202,6 +206,7 @@ tr:nth-child(even) {
 		<caption>Cancel Leave</caption>
 		<tr>
 			<th>leave-id</th>
+			<th>leave type</th>
 			<th>from_date</th>
 			<th>to_date</th>
 			<th>status</th>
@@ -212,6 +217,7 @@ tr:nth-child(even) {
 			for (LeaveEntity iterator : leavesList) {
 						if (iterator.getTo_date().isAfter(LocalDate.now())) {
 							out.println("<tr><td>" + iterator.getLeave_id() + "</td>");
+							out.println("<td>" + iterator.getLeave_type() + "</td>");
 							out.println("<td>" + iterator.getFrom_date() + "</td>");
 							out.println("<td>" + iterator.getTo_date() + "</td>");
 							out.println("<td>" + iterator.getStatus() + "</td>");
