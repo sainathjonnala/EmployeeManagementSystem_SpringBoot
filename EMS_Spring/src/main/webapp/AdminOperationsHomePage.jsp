@@ -298,7 +298,6 @@ tr {
 					} else if (result.equals("employeeDetails")) {
 						out.println("<table>");
 						out.println("<caption>Employee Details</caption>");
-
 						out.println(
 								"<th>Employee ID</th><th>Employee Name</th><th>Department ID</th><th>Employee Salary</th><th>PF</th><th>Reporting TO</th>");
 						out.println("<tr><td>" + employee.getEmployee_id() + "</td><td>" + employee.getLast_name() + " "

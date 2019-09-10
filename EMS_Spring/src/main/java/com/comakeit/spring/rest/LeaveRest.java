@@ -1,4 +1,4 @@
-package com.comakeit.spring.rest_controllers;
+package com.comakeit.spring.rest;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import com.comakeit.spring.services.EmployeeLeaveService;
 
 @RestController
 @RequestMapping("EMS")
-public class LeaveRestController {
+public class LeaveRest {
 
 	LeaveEntity leave;
 	@Autowired

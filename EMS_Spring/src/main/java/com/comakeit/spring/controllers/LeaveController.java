@@ -27,6 +27,7 @@ public class LeaveController {
 
 	RestTemplate restTemplate;
 	ResponseEntity<List<LeaveEntity>> leavesList;
+	HttpEntity<EmployeeEntity> employeeHttpEntity;
 	ModelAndView modelView;
 	String restResponse;
 
@@ -39,22 +40,26 @@ public class LeaveController {
 		leave.setStatus("pending");
 		leave.setApply_to(employee.getManager_id());
 		leave.setEmployee(employee);
+		
 		restTemplate = new RestTemplate();
 		restResponse = restTemplate.postForObject(Constant.url + "/EMS/applyLeave", leave, String.class);
+		
 		if (restResponse.equals("true"))
 			modelView = new ModelAndView("EmployeeHomePage.jsp?message=success");
 		else
 			modelView = new ModelAndView("EmployeeHomePage.jsp?message=failed");
+		
 		return modelView;
 	}
 
 	@RequestMapping(value = "/viewLeaves", method = RequestMethod.GET)
 	public ModelAndView viewLeavesOfEmployee(@SessionAttribute("employee") EmployeeEntity employee) {
 		restTemplate = new RestTemplate();
-		HttpEntity<EmployeeEntity> employeeHttpEntity = new HttpEntity<EmployeeEntity>(employee);
+		employeeHttpEntity = new HttpEntity<EmployeeEntity>(employee);
 		leavesList = restTemplate.exchange(Constant.url + "/EMS/viewLeaves", HttpMethod.POST, employeeHttpEntity,
 				new ParameterizedTypeReference<List<LeaveEntity>>() {
 				});
+		
 		modelView = new ModelAndView("EmployeeHomePage.jsp?action=view_leaves");
 		modelView.addObject("leavesList", leavesList.getBody());
 		modelView.addObject("employee", employee);
@@ -64,7 +69,7 @@ public class LeaveController {
 	@RequestMapping(value = "/viewAppliedLeaves", method = RequestMethod.GET)
 	public ModelAndView viewAppliedLeavesOfEmployee(@SessionAttribute("employee") EmployeeEntity employee) {
 		restTemplate = new RestTemplate();
-		HttpEntity<EmployeeEntity> employeeHttpEntity = new HttpEntity<EmployeeEntity>(employee);
+		employeeHttpEntity = new HttpEntity<EmployeeEntity>(employee);
 		leavesList = restTemplate.exchange(Constant.url + "/EMS/viewAppliedLeaves", HttpMethod.POST, employeeHttpEntity,
 				new ParameterizedTypeReference<List<LeaveEntity>>() {
 				});

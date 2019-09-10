@@ -1,4 +1,4 @@
-package com.comakeit.spring.rest_controllers;
+package com.comakeit.spring.rest;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import com.comakeit.spring.services.AdminService;
 
 @RestController
 @RequestMapping("EMS")
-public class AdminRestController {
+public class AdminRest {
 
 	@Autowired
 	private AdminService adminService;

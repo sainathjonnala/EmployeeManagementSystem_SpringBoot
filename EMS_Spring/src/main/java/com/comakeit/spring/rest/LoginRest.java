@@ -1,4 +1,4 @@
-package com.comakeit.spring.rest_controllers;
+package com.comakeit.spring.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +12,7 @@ import com.comakeit.spring.services.LoginService;
 
 @RestController
 @RequestMapping("EMS")
-public class LoginRestController {
+public class LoginRest {
 	
 	EmployeeEntity employee;
 	@Autowired
