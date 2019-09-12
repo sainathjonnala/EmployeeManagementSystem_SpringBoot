@@ -55,9 +55,9 @@ public class AdminService {
 		return employeeRepository.getEmployeesList();
 	}
 
-	public EmployeeEntity viewEmployeeDetails(EmployeeEntity employee) {
-		if (employeeRepository.existsById(employee.getEmployee_id())) {
-			return employeeRepository.findById(employee.getEmployee_id()).get();
+	public EmployeeEntity viewEmployeeDetails(String employee_id) {
+		if (employeeRepository.existsById(employee_id)) {
+			return employeeRepository.findById(employee_id).get();
 		}
 		return null;
 	}

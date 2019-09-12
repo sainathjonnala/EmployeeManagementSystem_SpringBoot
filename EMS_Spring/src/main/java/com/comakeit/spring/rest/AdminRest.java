@@ -47,15 +47,16 @@ public class AdminRest {
 		return adminService.viewEmployees();
 	}
 
-	@RequestMapping("viewEmployeeDetails")
-	@PostMapping
-	public EmployeeEntity viewEmployeeDetails(@RequestBody EmployeeEntity employee) {
-		return adminService.viewEmployeeDetails(employee);
+	@RequestMapping("viewEmployeeDetails/{employee_id}")
+	@GetMapping
+	public EmployeeEntity viewEmployeeDetails(@PathVariable String employee_id) {
+		System.out.println("in rest emp "+employee_id);
+		return adminService.viewEmployeeDetails(employee_id);
 	}
 
-	@RequestMapping("viewEmployeesOfManager")
-	@PostMapping
-	public List<EmployeeEntity> viewEmployeesOfManager(@RequestBody String manager_id) {
+	@RequestMapping("viewEmployeesOfManager/{manager_id}")
+	@GetMapping
+	public List<EmployeeEntity> viewEmployeesOfManager(@PathVariable String manager_id) {
 		return adminService.viewEmployeesOfManager(manager_id);
 	}
 

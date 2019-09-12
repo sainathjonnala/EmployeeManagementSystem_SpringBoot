@@ -27,7 +27,7 @@ public class LoginController {
 		return modelView;
 	}
 
-	@RequestMapping("/LoginValidation")
+	@RequestMapping("/loginValidation")
 	@PostMapping
 	public ModelAndView validate(LoginEntity loginCredentials) {
 		rest = new RestTemplate();
@@ -36,8 +36,9 @@ public class LoginController {
 
 		if (loginCredentials != null) {
 			String role = loginCredentials.getRole().getRole_name();
+
 			if (role.equals("admin")) {
-				modelView = new ModelAndView("forward:AdminOperationsHomePage.jsp");
+				modelView = new ModelAndView("forward:AdminHomePage.jsp");
 				modelView.addObject("loginCredentials", loginCredentials);
 				return modelView;
 			} else {

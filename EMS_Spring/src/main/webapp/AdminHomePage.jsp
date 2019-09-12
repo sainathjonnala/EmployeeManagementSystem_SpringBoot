@@ -77,32 +77,32 @@ tr {
 				<h3>Choose from below operations:</h3>
 			</div>
 			<div class="hrefs">
-				<a href="AdminOperationsHomePage.jsp?action=create">Add Employee
+				<a href="AdminHomePage.jsp?action=create">Add Employee
 				</a>
 			</div>
 
 			<div class="hrefs">
-				<a href="AdminOperationsHomePage.jsp?action=delete">Delete
+				<a href="AdminHomePage.jsp?action=delete">Delete
 					Employee</a>
 			</div>
 			<div class="hrefs">
 
-				<a href="viewEmployees">View Employees</a>
+				<a href="/employees">View Employees</a>
 			</div>
 			<div class="hrefs">
-				<a href="viewDepartments">View Departments</a>
+				<a href="/departments">View Departments</a>
 			</div>
 			<div class="hrefs">
 				<a
-					href="AdminOperationsHomePage.jsp?action=viewEmployeesOfManager">View
+					href="AdminHomePage.jsp?action=employeesOfManager">View
 					Employees of specific Manager</a>
 			</div>
 			<div class="hrefs">
-				<a href="AdminOperationsHomePage.jsp?action=viewEmployeeDetails">View
+				<a href="AdminHomePage.jsp?action=employeeDetails">View
 					Employee Details and PF</a>
 			</div>
 			<div class="hrefs">
-				<a href="AdminOperationsHomePage.jsp?action=listEmployeesBySalary">View
+				<a href="AdminHomePage.jsp?action=salaries">View
 					Employees By Salary Range</a>
 			</div>
 			<div class="hrefs">
@@ -121,7 +121,7 @@ tr {
 				<br />
 				<p id="demo"></p>
 				<h2>Create User</h2>
-				<form action="addEmployee" method="POST"
+				<form action="/addEmployee" method="POST"
 					onsubmit="return myfunction(email)">
 					<div style="text-align: left;">
 						<div>
@@ -163,7 +163,7 @@ tr {
 			<%
 				} else if (action.equals("delete")) {
 			%>
-			<form action="deleteEmployee" method="post">
+			<form action="/deleteEmployee" method="post">
 				<p>Enter the Employee-ID to delete from records:</p>
 				<div style="width: 100px; text-align: left;">
 					<div>
@@ -175,9 +175,9 @@ tr {
 
 
 			<%
-				} else if (action.equals("viewEmployeesOfManager")) {
+				} else if (action.equals("employeesOfManager")) {
 			%>
-			<form action="viewEmployeesOfManager" method="post">
+			<form action="/employeesOfManager" method="post">
 				<p>Enter the Reporting Manager:</p>
 				<div style="width: 100px; text-align: left;">
 					<div>
@@ -189,9 +189,9 @@ tr {
 
 
 			<%
-				} else if (action.equals("viewEmployeeDetails")) {
+				} else if (action.equals("employeeDetails")) {
 			%>
-			<form action="viewEmployeeDetails" method="post">
+			<form action="/employeeDetails" method="post">
 				<p>Enter the EmployeeID :</p>
 				<div style="width: 100px; text-align: left;">
 					<div>
@@ -203,9 +203,9 @@ tr {
 
 
 			<%
-				} else if (action.equals("listEmployeesBySalary")) {
+				} else if (action.equals("salaries")) {
 			%>
-			<form action="viewEmployeesBySalary" method="post">
+			<form action="/salaries" method="post">
 				<p>Enter the Range :</p>
 				<div style="width: 100px; text-align: left;">
 					<div>
@@ -225,13 +225,13 @@ tr {
 						out.println("<h3>Failed in adding employee!!!</h3>");
 					} else if (error.equals("delete")) {
 						out.println("<h3>Unable to delete or employee not found</h3>");
-					} else if (error.equals("viewEmployees")) {
+					} else if (error.equals("employees")) {
 						out.println("<h3>No Employees Found</h3>");
-					} else if (error.equals("viewEmployeesOfManager")) {
+					} else if (error.equals("employeesOfManager")) {
 						out.println("<h3>Enter valid Manager name</h3>");
-					} else if (error.equals("viewEmployeeDetails")) {
+					} else if (error.equals("employeeDetails")) {
 						out.println("<h3>No Employee Found!!</h3>");
-					} else if (error.equals("listEmployeesBySalary")) {
+					} else if (error.equals("salaries")) {
 						out.println("<h3>No Employees Found!!</h3>");
 					}
 				}
@@ -264,7 +264,7 @@ tr {
 
 			</div>
 			<%
-				} else if (result.equals("viewEmployees")) {
+				} else if (result.equals("employees")) {
 						out.println("<table>");
 						out.println("<caption>Employees Directory</caption>");
 						out.println("<th>Employee ID </th><th>Employee Name</th><th>Department ID</th>");
@@ -274,7 +274,7 @@ tr {
 									+ "</td></tr>");
 						}
 						out.println("</table>");
-					} else if (result.equals("viewDepartments")) {
+					} else if (result.equals("departments")) {
 						out.println("<table>");
 						out.println("<caption>Departments List</caption>");
 						out.println("<th>Department ID</th><th>Department Name</th>");
@@ -285,7 +285,7 @@ tr {
 
 						out.println("</table>");
 
-					} else if (result.equals("viewEmployeesOfManager")) {
+					} else if (result.equals("employeesOfManager")) {
 						out.println("<table>");
 						out.println("<h4>Reporting Manager: " + manager_id + "</h4>");
 						out.println("<th>Employee ID </th><th>Employee Name</th><th>Department ID</th>");
@@ -305,7 +305,7 @@ tr {
 								+ "</td><td>" + employee.getSalary() + "</td><td>" + employee.getPF() + "</td><td>"
 								+ employee.getManager_id() + "</td></tr>");
 						out.println("</table>");
-					} else if (result.equals("listEmployeesBySalary")) {
+					} else if (result.equals("salaries")) {
 						out.println("<table>");
 						out.println("<caption>Employees List</caption>");
 						out.println("<th>Employee ID </th><th>Employee Name</th><th>Employee Salary</th>");

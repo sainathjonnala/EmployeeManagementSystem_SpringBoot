@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.comakeit.spring.entities.EmployeeEntity;
 import com.comakeit.spring.entities.LeaveBalanceEntity;
 import com.comakeit.spring.entities.LeaveEntity;
+import com.comakeit.spring.repositories.EmployeeRepository;
 import com.comakeit.spring.repositories.LeaveBalanceRepository;
 import com.comakeit.spring.repositories.LeaveRepository;
 
@@ -22,6 +23,8 @@ public class EmployeeLeaveService {
 	private LeaveBalanceRepository leaveBalanceRepository;
 	@Autowired
 	private LeaveRepository leaveRepository;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
 	public boolean applyLeave(LeaveEntity leave) {
 		leaveBalance = leaveBalanceRepository.findById(leave.getEmployee().getLeave_balance().getId()).get();
@@ -61,12 +64,12 @@ public class EmployeeLeaveService {
 		return false;
 	}
 
-	public List<LeaveEntity> getLeavesOfEmployee(EmployeeEntity employee) {
-		return leaveRepository.getLeavesOfEmployee(employee.getEmployee_id());
+	public List<LeaveEntity> getLeavesOfEmployee(String employee_id) {
+		return leaveRepository.getLeavesOfEmployee(employee_id);
 	}
 
-	public List<LeaveEntity> getLeaveRequests(EmployeeEntity employee) {
-		return leaveRepository.getLeaveRequests(employee.getEmployee_id());
+	public List<LeaveEntity> getLeaveRequests(String employee_id) {
+		return leaveRepository.getLeaveRequests(employee_id);
 	}
 
 	public boolean acceptLeaveRequest(LeaveEntity leave) {
@@ -128,12 +131,12 @@ public class EmployeeLeaveService {
 		return false;
 	}
 
-	public List<LeaveEntity> getAppliedLeavesOfEmployee(EmployeeEntity employee) {
-		return leaveRepository.getAppliedLeavesOfEmployee(employee.getEmployee_id());
+	public List<LeaveEntity> getAppliedLeavesOfEmployee(String employee_id) {
+		return leaveRepository.getAppliedLeavesOfEmployee(employee_id);
 	}
 
-	public LeaveBalanceEntity getLeaveBalance(EmployeeEntity employee) {
-		return leaveBalanceRepository.getLeaveBalance(employee.getLeave_balance().getId());
+	public LeaveBalanceEntity getLeaveBalance(String employee_id) {
+		return employeeRepository.findById(employee_id).get().getLeave_balance();
 	}
 
 }

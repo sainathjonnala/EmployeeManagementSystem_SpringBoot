@@ -13,8 +13,7 @@ import com.comakeit.spring.services.LoginService;
 @RestController
 @RequestMapping("EMS")
 public class LoginRest {
-	
-	EmployeeEntity employee;
+
 	@Autowired
 	private LoginService loginService;
 
@@ -24,15 +23,11 @@ public class LoginRest {
 		loginCredentials = loginService.findUser(loginCredentials);
 		return loginCredentials;
 	}
-	
+
 	@RequestMapping("/user")
 	@PostMapping
 	public EmployeeEntity findUser(@RequestBody LoginEntity loginCredentials) {
-		employee = loginService.getEmployee(loginCredentials);
-		if(employee != null)
-			return employee;
-		return null;
+		return loginService.getEmployee(loginCredentials);
 	}
-	
 
 }

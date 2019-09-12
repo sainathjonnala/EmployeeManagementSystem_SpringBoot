@@ -9,7 +9,7 @@
 <body>
 	<div style="padding-left: 50px; font-family: monospace;">
 		<h2>Login Page</h2>
-		<form action="LoginValidation" method="POST">
+		<form action="/loginValidation" method="POST">
 			<div style="width: 100px; text-align: left;">
 				
 				<div style="padding: 10px;">

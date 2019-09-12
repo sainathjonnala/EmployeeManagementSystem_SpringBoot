@@ -3,6 +3,7 @@ package com.comakeit.spring.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,24 +42,24 @@ public class LeaveRest {
 		return employeeLeaveService.acceptLeaveRequest(leave);
 	}
 
-	@RequestMapping(value = "/leaveRequests", method = RequestMethod.POST)
-	public List<LeaveEntity> viewLeaveRequest(@RequestBody EmployeeEntity employee) {
-		return employeeLeaveService.getLeaveRequests(employee);
+	@RequestMapping(value = "/leaveRequests/{employee_id}", method = RequestMethod.GET)
+	public List<LeaveEntity> viewLeaveRequest(@PathVariable String employee_id) {
+		return employeeLeaveService.getLeaveRequests(employee_id);
 	}
 
-	@RequestMapping(value = "/viewLeaves", method = RequestMethod.POST)
-	public List<LeaveEntity> viewLeavesOfEmployee(@RequestBody EmployeeEntity employee) {
-		return employeeLeaveService.getLeavesOfEmployee(employee);
+	@RequestMapping(value = "/viewLeaves/{employee_id}", method = RequestMethod.GET)
+	public List<LeaveEntity> viewLeavesOfEmployee(@PathVariable String employee_id) {
+		return employeeLeaveService.getLeavesOfEmployee(employee_id);
 	}
 
-	@RequestMapping(value = "/viewAppliedLeaves", method = RequestMethod.POST)
-	public List<LeaveEntity> viewAppliedLeavesOfEmployee(@RequestBody EmployeeEntity employee) {
-		return employeeLeaveService.getAppliedLeavesOfEmployee(employee);
+	@RequestMapping(value = "/viewAppliedLeaves/{employee_id}", method = RequestMethod.GET)
+	public List<LeaveEntity> viewAppliedLeavesOfEmployee(@PathVariable String employee_id) {
+		return employeeLeaveService.getAppliedLeavesOfEmployee(employee_id);
 	}
 
-	@RequestMapping(value = "/viewLeaveBalance", method = RequestMethod.POST)
-	public LeaveBalanceEntity viewLeaveBalance(@RequestBody EmployeeEntity employee) {
-		return employeeLeaveService.getLeaveBalance(employee);
+	@RequestMapping(value = "/viewLeaveBalance/{employee_id}", method = RequestMethod.GET)
+	public LeaveBalanceEntity viewLeaveBalance(@PathVariable String employee_id) {
+		return employeeLeaveService.getLeaveBalance(employee_id);
 	}
 
 }
