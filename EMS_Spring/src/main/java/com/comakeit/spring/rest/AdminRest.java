@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.comakeit.spring.entities.DepartmentEntity;
 import com.comakeit.spring.entities.EmployeeEntity;
+import com.comakeit.spring.exceptions.DetailsNotFound;
 import com.comakeit.spring.services.AdminService;
 
 @RestController
 @RequestMapping("EMS")
 public class AdminRest {
+
+	EmployeeEntity employee;
 
 	@Autowired
 	private AdminService adminService;
@@ -25,6 +28,7 @@ public class AdminRest {
 	@RequestMapping("createEmployee")
 	@PostMapping
 	public String createEmployee(@RequestBody EmployeeEntity employee) {
+
 		return adminService.insertEmployee(employee);
 	}
 
@@ -35,35 +39,43 @@ public class AdminRest {
 		return adminService.removeEmployee(employee_id);
 	}
 
-	@RequestMapping("viewDepartments")
+	@RequestMapping("departments")
 	@GetMapping
 	public List<DepartmentEntity> viewDepartments() {
+
 		return adminService.viewDepartments();
 	}
 
-	@RequestMapping("viewEmployees")
+	@RequestMapping("employees")
 	@GetMapping
 	public List<EmployeeEntity> viewEmployees() {
+
 		return adminService.viewEmployees();
 	}
 
-	@RequestMapping("viewEmployeeDetails/{employee_id}")
+	@RequestMapping("employeeDetails/{employee_id}")
 	@GetMapping
-	public EmployeeEntity viewEmployeeDetails(@PathVariable String employee_id) {
-		System.out.println("in rest emp "+employee_id);
-		return adminService.viewEmployeeDetails(employee_id);
+	public EmployeeEntity viewEmployeeDetails(@PathVariable String employee_id) throws Exception {
+
+		employee = adminService.viewEmployeeDetails(employee_id);
+		if (employee == null) {
+			throw new DetailsNotFound();
+		}
+		return employee;
 	}
 
-	@RequestMapping("viewEmployeesOfManager/{manager_id}")
+	@RequestMapping("employeesOfManager/{manager_id}")
 	@GetMapping
-	public List<EmployeeEntity> viewEmployeesOfManager(@PathVariable String manager_id) {
+	public List<EmployeeEntity> viewEmployeesOfManager(@PathVariable String manager_id) throws Exception {
+
 		return adminService.viewEmployeesOfManager(manager_id);
 	}
 
-	@RequestMapping("viewEmployeesBySalary/{salaryFrom}/{salaryTo}")
+	@RequestMapping("salaries/{salaryFrom}/{salaryTo}")
 	@GetMapping
 	public List<EmployeeEntity> viewEmployeesBySalary(@PathVariable("salaryFrom") double salaryFrom,
 			@PathVariable("salaryTo") double salaryTo) {
+
 		return adminService.viewEmployeesBySalary(salaryFrom, salaryTo);
 	}
 
