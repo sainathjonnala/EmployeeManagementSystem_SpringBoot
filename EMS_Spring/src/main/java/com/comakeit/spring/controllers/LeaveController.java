@@ -23,9 +23,9 @@ import com.comakeit.spring.entities.LeaveEntity;
 @Controller
 public class LeaveController {
 
-	RestTemplate restTemplate;
+	RestTemplate restTemplate = new RestTemplate();
 	ResponseEntity<List<LeaveEntity>> leavesList;
-	ModelAndView modelView;
+	ModelAndView modelView = new ModelAndView();
 	String restResponse;
 
 	@RequestMapping(value = "/applyLeave", method = RequestMethod.POST)
@@ -38,26 +38,24 @@ public class LeaveController {
 		leave.setApply_to(employee.getManager_id());
 		leave.setEmployee(employee);
 
-		restTemplate = new RestTemplate();
 		restResponse = restTemplate.postForObject(Constant.url + "/EMS/applyLeave", leave, String.class);
 
 		if (restResponse.equals("true"))
-			modelView = new ModelAndView("EmployeeHomePage.jsp?message=success");
+			modelView.setViewName("EmployeeHomePage.jsp?message=success");
 		else
-			modelView = new ModelAndView("EmployeeHomePage.jsp?message=failed");
+			modelView.setViewName("EmployeeHomePage.jsp?message=failed");
 
 		return modelView;
 	}
 
 	@RequestMapping(value = "/viewLeaves", method = RequestMethod.GET)
 	public ModelAndView viewLeavesOfEmployee(@SessionAttribute("employee") EmployeeEntity employee) {
-		restTemplate = new RestTemplate();
-		
+
 		leavesList = restTemplate.exchange(Constant.url + "/EMS/viewLeaves/" + employee.getEmployee_id(),
 				HttpMethod.GET, null, new ParameterizedTypeReference<List<LeaveEntity>>() {
 				});
 
-		modelView = new ModelAndView("EmployeeHomePage.jsp?action=view_leaves");
+		modelView.setViewName("EmployeeHomePage.jsp?action=view_leaves");
 		modelView.addObject("leavesList", leavesList.getBody());
 		modelView.addObject("employee", employee);
 		return modelView;
@@ -65,61 +63,60 @@ public class LeaveController {
 
 	@RequestMapping(value = "/viewAppliedLeaves", method = RequestMethod.GET)
 	public ModelAndView viewAppliedLeavesOfEmployee(@SessionAttribute("employee") EmployeeEntity employee) {
-		restTemplate = new RestTemplate();
+
 		leavesList = restTemplate.exchange(Constant.url + "/EMS/viewAppliedLeaves/" + employee.getEmployee_id(),
 				HttpMethod.GET, null, new ParameterizedTypeReference<List<LeaveEntity>>() {
 				});
-		modelView = new ModelAndView("EmployeeHomePage.jsp?action=cancel_leave");
+
+		modelView.setViewName("EmployeeHomePage.jsp?action=cancel_leave");
 		modelView.addObject("leavesList", leavesList.getBody());
 		return modelView;
 	}
 
 	@RequestMapping(value = "/rejectLeave", method = RequestMethod.GET)
 	public ModelAndView rejectLeaveRequest(LeaveEntity leave) {
-		restTemplate = new RestTemplate();
+
 		restTemplate.put(Constant.url + "/EMS/rejectLeave", leave);
-		modelView = new ModelAndView("/viewLeaveRequests");
+
+		modelView.setViewName("/viewLeaveRequests");
 		return modelView;
 	}
 
 	@RequestMapping(value = "/acceptLeave", method = RequestMethod.GET)
 	public ModelAndView acceptLeaveRequest(LeaveEntity leave) {
-		restTemplate = new RestTemplate();
+
 		restTemplate.put(Constant.url + "/EMS/acceptLeave", leave);
-		modelView = new ModelAndView("/viewLeaveRequests");
+		modelView.setViewName("/viewLeaveRequests");
 		return modelView;
 	}
 
 	@RequestMapping(value = "/cancelLeave", method = RequestMethod.GET)
 	public ModelAndView cancelLeaveRequest(LeaveEntity leave) {
-		restTemplate = new RestTemplate();
+
 		restTemplate.put(Constant.url + "/EMS/cancelLeave", leave);
-		modelView = new ModelAndView("/viewAppliedLeaves");
+		modelView.setViewName("/viewAppliedLeaves");
 		return modelView;
 	}
 
 	@RequestMapping(value = "/viewLeaveRequests", method = RequestMethod.GET)
 	public ModelAndView viewLeaveRequestsOfManager(@SessionAttribute("employee") EmployeeEntity employee) {
-		restTemplate = new RestTemplate();
+
 		leavesList = restTemplate.exchange(Constant.url + "/EMS/leaveRequests/" + employee.getEmployee_id(),
 				HttpMethod.GET, null, new ParameterizedTypeReference<List<LeaveEntity>>() {
 				});
-		modelView = new ModelAndView("EmployeeHomePage.jsp?action=view_leave_requests");
+		modelView.setViewName("EmployeeHomePage.jsp?action=view_leave_requests");
 		modelView.addObject("leavesList", leavesList.getBody());
 		return modelView;
 	}
 
 	@RequestMapping(value = "/viewLeaveBalance", method = RequestMethod.GET)
 	public ModelAndView viewLeaveBalance(@SessionAttribute("employee") EmployeeEntity employee) {
-		restTemplate = new RestTemplate();
+
 		LeaveBalanceEntity leaveBalance = restTemplate.getForObject(
 				Constant.url + "/EMS/viewLeaveBalance/" + employee.getEmployee_id(), LeaveBalanceEntity.class);
-		modelView = new ModelAndView("EmployeeHomePage.jsp?action=view_leave_balance");
+		modelView.setViewName("EmployeeHomePage.jsp?action=view_leave_balance");
 		modelView.addObject("leaveBalance", leaveBalance);
-		if (leaveBalance != null) {
-			return modelView;
-		}
-		return null;
+		return modelView;
 	}
 
 	public static String createLeaveId() {

@@ -77,13 +77,11 @@ tr {
 				<h3>Choose from below operations:</h3>
 			</div>
 			<div class="hrefs">
-				<a href="AdminHomePage.jsp?action=create">Add Employee
-				</a>
+				<a href="AdminHomePage.jsp?action=create">Add Employee </a>
 			</div>
 
 			<div class="hrefs">
-				<a href="AdminHomePage.jsp?action=delete">Delete
-					Employee</a>
+				<a href="AdminHomePage.jsp?action=delete">Delete Employee</a>
 			</div>
 			<div class="hrefs">
 
@@ -93,17 +91,16 @@ tr {
 				<a href="/departments">View Departments</a>
 			</div>
 			<div class="hrefs">
-				<a
-					href="AdminHomePage.jsp?action=employeesOfManager">View
+				<a href="AdminHomePage.jsp?action=employeesOfManager">View
 					Employees of specific Manager</a>
 			</div>
 			<div class="hrefs">
-				<a href="AdminHomePage.jsp?action=employeeDetails">View
-					Employee Details and PF</a>
+				<a href="AdminHomePage.jsp?action=employeeDetails">View Employee
+					Details and PF</a>
 			</div>
 			<div class="hrefs">
-				<a href="AdminHomePage.jsp?action=salaries">View
-					Employees By Salary Range</a>
+				<a href="AdminHomePage.jsp?action=salaries">View Employees By
+					Salary Range</a>
 			</div>
 			<div class="hrefs">
 				<a href="index.jsp">Logout</a>

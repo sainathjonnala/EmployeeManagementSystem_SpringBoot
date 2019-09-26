@@ -23,7 +23,8 @@ public class LoginController {
 
 	@RequestMapping("/index")
 	public ModelAndView displayHomePage() {
-		modelView = new ModelAndView("index.jsp");
+		modelView = new ModelAndView();
+		modelView.setViewName("index.jsp");
 		return modelView;
 	}
 
@@ -31,23 +32,25 @@ public class LoginController {
 	@PostMapping
 	public ModelAndView validate(LoginEntity loginCredentials) {
 		rest = new RestTemplate();
+		modelView = new ModelAndView();
 
-		loginCredentials = rest.postForObject(Constant.url + "/EMS/login", loginCredentials, LoginEntity.class);
+		try {
 
-		if (loginCredentials != null) {
+			loginCredentials = rest.postForObject(Constant.url + "/EMS/login", loginCredentials, LoginEntity.class);
+
 			String role = loginCredentials.getRole().getRole_name();
 
 			if (role.equals("admin")) {
-				modelView = new ModelAndView("forward:AdminHomePage.jsp");
+				modelView.setViewName("AdminHomePage.jsp");
 				modelView.addObject("loginCredentials", loginCredentials);
-				return modelView;
 			} else {
 				employee = rest.postForObject(Constant.url + "/EMS/user", loginCredentials, EmployeeEntity.class);
-				modelView = new ModelAndView("forward:EmployeeHomePage.jsp");
+				modelView.setViewName("EmployeeHomePage.jsp");
 				modelView.addObject("employee", employee);
-				return modelView;
 			}
+		} catch (Exception e) {
+			modelView.setViewName("index.jsp?validation=invalid");
 		}
-		return new ModelAndView("forward:index.jsp?validation=invalid");
+		return modelView;
 	}
 }
