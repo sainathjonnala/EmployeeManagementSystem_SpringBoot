@@ -33,7 +33,7 @@ public class LeaveEntity implements Serializable {
 
 	@Column(length = 20)
 	private String apply_to;
-	@ManyToOne//(cascade = CascadeType.ALL)
+	@ManyToOne
 	private EmployeeEntity employee;
 
 	public String getLeave_id() {

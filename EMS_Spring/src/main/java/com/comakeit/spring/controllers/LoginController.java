@@ -44,7 +44,7 @@ public class LoginController {
 				modelView.setViewName("AdminHomePage.jsp");
 				modelView.addObject("loginCredentials", loginCredentials);
 			} else {
-				employee = rest.postForObject(Constant.url + "/EMS/user", loginCredentials, EmployeeEntity.class);
+				employee = rest.getForObject(Constant.url + "/EMS/user/" + loginCredentials.getUsername(), EmployeeEntity.class);
 				modelView.setViewName("EmployeeHomePage.jsp");
 				modelView.addObject("employee", employee);
 			}

@@ -43,10 +43,4 @@ public class LeaveBalanceEntity implements Serializable {
 		this.loss_of_pay = loss_of_pay;
 	}
 
-	@Override
-	public String toString() {
-		return "LeaveBalanceEntity [id=" + id + ", casual_leaves=" + casual_leaves + ", loss_of_pay=" + loss_of_pay
-				+ "]";
-	}
-	
 }

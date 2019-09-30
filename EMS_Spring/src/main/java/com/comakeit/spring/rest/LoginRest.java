@@ -1,7 +1,8 @@
 package com.comakeit.spring.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +30,10 @@ public class LoginRest {
 		return loginCredentials;
 	}
 
-	@RequestMapping("/user")
-	@PostMapping
-	public EmployeeEntity findUser(@RequestBody LoginEntity loginCredentials) {
-		return loginService.getEmployee(loginCredentials);
+	@RequestMapping("/user/{username}")
+	@GetMapping
+	public EmployeeEntity findUser(@PathVariable String username) {
+		return loginService.getEmployee(username);
 	}
 
 }

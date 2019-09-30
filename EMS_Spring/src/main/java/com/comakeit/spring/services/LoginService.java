@@ -24,11 +24,8 @@ public class LoginService {
 		return null;
 	}
 
-	public EmployeeEntity getEmployee(LoginEntity loginCredentials) {
-		EmployeeEntity employee = loginRepository.getEmployee(loginCredentials.getUsername());
-		if (employee != null)
-			return employee;
-		return null;
+	public EmployeeEntity getEmployee(String username) {
+		return loginRepository.getEmployee(username);
 	}
 
 }
