@@ -39,21 +39,10 @@ public class AdminController {
 
 		employee.setDepartment(department);
 
-		if (role.getRole_id() == 2)
-			role.setRole_name("employee");
-		else
-			role.setRole_name("manager");
-
 		LoginEntity login = new LoginEntity();
-		login.setUsername(createUsername());
-		login.setPassword(createPassword());
+		
 		login.setRole(role);
 		employee.setLogin(login);
-
-		LeaveBalanceEntity leaveBalance = new LeaveBalanceEntity();
-		leaveBalance.setCasual_leaves(10);
-		leaveBalance.setLoss_of_pay(10);
-		employee.setLeave_balance(leaveBalance);
 
 		response = restTemplate.postForObject(Constant.url + "/EMS/createEmployee", employee, String.class);
 
@@ -167,14 +156,6 @@ public class AdminController {
 		}
 		modelView.setViewName("AdminHomePage.jsp?action=salaries&error=salaries");
 		return modelView;
-	}
-
-	public static String createUsername() {
-		return "UN" + new SecureRandom().nextInt() % 100000;
-	}
-
-	public static String createPassword() {
-		return "PW" + new SecureRandom().nextInt() % 100000;
 	}
 
 }
