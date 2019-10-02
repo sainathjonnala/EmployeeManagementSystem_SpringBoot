@@ -31,7 +31,6 @@ public class LeaveController {
 	@RequestMapping(value = "/applyLeave", method = RequestMethod.POST)
 	public ModelAndView applyForLeave(LeaveEntity leave, @RequestParam("start_date") String from_date,
 			@RequestParam("end_date") String to_date, @SessionAttribute("employee") EmployeeEntity employee) {
-		leave.setLeave_id(createLeaveId());
 		leave.setFrom_date(LocalDate.parse(from_date));
 		leave.setTo_date(LocalDate.parse(to_date));
 		leave.setStatus("pending");
@@ -117,10 +116,6 @@ public class LeaveController {
 		modelView.setViewName("EmployeeHomePage.jsp?action=view_leave_balance");
 		modelView.addObject("leaveBalance", leaveBalance);
 		return modelView;
-	}
-
-	public static String createLeaveId() {
-		return "LV" + new SecureRandom().nextInt() % 100000;
 	}
 
 }
