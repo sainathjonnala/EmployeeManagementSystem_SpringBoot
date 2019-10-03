@@ -29,14 +29,12 @@ public class AdminRest {
 	@RequestMapping("createEmployee")
 	@PostMapping
 	public String createEmployee(@RequestBody EmployeeEntity employee) {
-
 		return adminService.insertEmployee(employee);
 	}
 
 	@RequestMapping("removeEmployee/{employee_id}")
 	@DeleteMapping
 	public String deleteEmployee(@PathVariable("employee_id") String employee_id) {
-
 		return adminService.removeEmployee(employee_id);
 	}
 
@@ -54,7 +52,7 @@ public class AdminRest {
 		return adminService.viewEmployees();
 	}
 
-	@RequestMapping("employeeDetails/{employee_id}")
+	@RequestMapping("employee/{employee_id}")
 	@GetMapping
 	public EmployeeEntity viewEmployeeDetails(@PathVariable String employee_id) throws Exception {
 
@@ -68,7 +66,6 @@ public class AdminRest {
 	@RequestMapping("employeesOfManager/{manager_id}")
 	@GetMapping
 	public List<EmployeeEntity> viewEmployeesOfManager(@PathVariable String manager_id) throws Exception {
-
 		return adminService.viewEmployeesOfManager(manager_id);
 	}
 

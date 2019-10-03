@@ -60,7 +60,7 @@ public class AdminController {
 	@PostMapping
 	public ModelAndView deleteEmployee(EmployeeEntity employee) {
 
-		employee = restTemplate.postForObject(Constant.url + "/EMS/viewEmployeeDetails", employee,
+		employee = restTemplate.getForObject(Constant.url + "/EMS/employee/"+ employee.getEmployee_id(),
 				EmployeeEntity.class);
 		if (employee != null) {
 
@@ -111,8 +111,6 @@ public class AdminController {
 		try {
 			employee = restTemplate.getForObject(Constant.url + "/EMS/employeeDetails/" + employee_id,
 					EmployeeEntity.class);
-			employee.setPF(employee.getSalary() * (0.05));
-
 			modelView.setViewName("AdminHomePage.jsp?result=employeeDetails");
 			modelView.addObject("employee", employee);
 		} catch (Exception e) {

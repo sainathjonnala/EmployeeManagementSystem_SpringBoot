@@ -25,6 +25,7 @@ public class AdminService {
 	LoginEntity login;
 	RoleEntity role;
 	LeaveBalanceEntity leaveBalance;
+	EmployeeEntity employee;
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
@@ -84,7 +85,9 @@ public class AdminService {
 	public EmployeeEntity viewEmployeeDetails(String employee_id) {
 		
 		if (employeeRepository.existsById(employee_id)) {
-			return employeeRepository.findById(employee_id).get();
+			employee = employeeRepository.findById(employee_id).get();
+			employee.setPF(employee.getSalary() * (0.05));
+			return employee;
 		}
 		return null;
 		
