@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.comakeit.spring.entities.EmployeeEntity;
 import com.comakeit.spring.entities.LeaveBalanceEntity;
 import com.comakeit.spring.entities.LeaveEntity;
 import com.comakeit.spring.repositories.EmployeeRepository;
@@ -28,6 +27,7 @@ public class EmployeeLeaveService {
 	private EmployeeRepository employeeRepository;
 
 	public boolean applyLeave(LeaveEntity leave) {
+		System.out.println(leave);
 		leaveBalance = leaveBalanceRepository.findById(leave.getEmployee().getLeave_balance().getId()).get();
 		Period period = Period.between(leave.getFrom_date(), leave.getTo_date());
 		int leaveDuration = period.getDays();
@@ -39,6 +39,8 @@ public class EmployeeLeaveService {
 			leave_balance_count = leaveBalance.getCasual_leaves();
 			if (leave_balance_count >= 1 && leaveDuration <= leave_balance_count) {
 				leaveBalance.setCasual_leaves(leave_balance_count - leaveDuration);
+				leave.setLeave_id(createLeaveId());
+				System.out.println(leave);
 				leaveRepository.save(leave);
 				return true;
 			}
