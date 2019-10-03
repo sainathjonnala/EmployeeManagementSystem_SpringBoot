@@ -1,5 +1,6 @@
 package com.comakeit.spring.services;
 
+import java.security.SecureRandom;
 import java.time.Period;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class EmployeeLeaveService {
 					}
 					if (leaves_leaveDuration + leaveDuration <= 3) {
 						leaveBalance.setLoss_of_pay(leave_balance_count - leaveDuration);
+						leave.setLeave_id(createLeaveId());
 						leaveRepository.save(leave);
 						return true;
 					}
@@ -138,5 +140,10 @@ public class EmployeeLeaveService {
 	public LeaveBalanceEntity getLeaveBalance(String employee_id) {
 		return employeeRepository.findById(employee_id).get().getLeave_balance();
 	}
+	
+	public static String createLeaveId() {
+		return "LV" + new SecureRandom().nextInt() % 100000;
+	}
+
 
 }
