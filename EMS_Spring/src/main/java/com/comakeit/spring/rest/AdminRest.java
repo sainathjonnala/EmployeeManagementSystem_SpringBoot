@@ -27,13 +27,13 @@ public class AdminRest {
 
 	@RequestMapping("createEmployee")
 	@PostMapping
-	public String createEmployee(@RequestBody EmployeeEntity employee) {
-		return adminService.insertEmployee(employee);
+	public boolean createEmployee(@RequestBody EmployeeEntity employee) {
+		return adminService.addEmployee(employee);
 	}
 
 	@RequestMapping("removeEmployee/{employee_id}")
 	@DeleteMapping
-	public String deleteEmployee(@PathVariable("employee_id") String employee_id) {
+	public boolean deleteEmployee(@PathVariable("employee_id") String employee_id) {
 		return adminService.removeEmployee(employee_id);
 	}
 

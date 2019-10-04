@@ -36,7 +36,7 @@ public class AdminService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
-	public String insertEmployee(EmployeeEntity employee) {
+	public boolean addEmployee(EmployeeEntity employee) {
 		
 		role = roleRepository.findById(employee.getLogin().getRole().getRole_id()).get();
 		
@@ -55,10 +55,10 @@ public class AdminService {
 		employee.setLeave_balance(leaveBalance);
 		
 		employeeRepository.save(employee);
-		return "true";
+		return true;
 	}
 
-	public String removeEmployee(String employee_id) {
+	public boolean removeEmployee(String employee_id) {
 		
 		if (employeeRepository.existsById(employee_id)) {
 			EmployeeEntity employee = employeeRepository.findById(employee_id).get();
@@ -69,9 +69,9 @@ public class AdminService {
 				}
 			}
 			employeeRepository.delete(employee);
-			return "true";
+			return true;
 		}
-		return "false";
+		return false;
 	}
 
 	public List<DepartmentEntity> viewDepartments() {
