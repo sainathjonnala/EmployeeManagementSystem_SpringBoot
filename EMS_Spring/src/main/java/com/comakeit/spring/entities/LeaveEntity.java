@@ -100,11 +100,4 @@ public class LeaveEntity implements Serializable {
 		this.apply_to = apply_to;
 	}
 
-	@Override
-	public String toString() {
-		return "LeaveEntity [leave_id=" + leave_id + ", leave_type=" + leave_type + ", reason=" + reason + ", status="
-				+ status + ", employee=" + employee + "]";
-	}
-
-	
 }

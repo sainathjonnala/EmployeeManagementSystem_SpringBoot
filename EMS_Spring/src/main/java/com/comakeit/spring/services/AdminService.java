@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.comakeit.spring.entities.DepartmentEntity;
@@ -35,41 +36,47 @@ public class AdminService {
 	private LeaveRepository leaveRepository;
 	@Autowired
 	private RoleRepository roleRepository;
-	
-	public boolean addEmployee(EmployeeEntity employee) {
-		
-		role = roleRepository.findById(employee.getLogin().getRole().getRole_id()).get();
-		
-		login = new LoginEntity();
-		login.setUsername(createUsername());
-		login.setPassword(createPassword());
-		login.setRole(role);
-		employee.setLogin(login);
-		
-		department = departmentRepository.findById(employee.getDepartment().getDepartment_id()).get();
-		employee.setDepartment(department);
-		
-		leaveBalance = new LeaveBalanceEntity();
-		leaveBalance.setCasual_leaves(10);
-		leaveBalance.setLoss_of_pay(10);
-		employee.setLeave_balance(leaveBalance);
-		
-		employeeRepository.save(employee);
-		return true;
+
+	public boolean addEmployee(EmployeeEntity employee) throws DataIntegrityViolationException {
+		try {
+			role = roleRepository.findById(employee.getLogin().getRole().getRole_id()).get();
+
+			login = new LoginEntity();
+			login.setUsername(createUsername());
+			login.setPassword(createPassword());
+			login.setRole(role);
+			employee.setLogin(login);
+
+			department = departmentRepository.findById(employee.getDepartment().getDepartment_id()).get();
+			employee.setDepartment(department);
+
+			leaveBalance = new LeaveBalanceEntity();
+			leaveBalance.setCasual_leaves(10);
+			leaveBalance.setLoss_of_pay(10);
+			employee.setLeave_balance(leaveBalance);
+
+			employeeRepository.save(employee);
+			return true;
+		} catch (DataIntegrityViolationException exception) {
+			throw new DataIntegrityViolationException("Employee ID already exists!");
+		}
 	}
 
-	public boolean removeEmployee(String employee_id) {
-		
-		if (employeeRepository.existsById(employee_id)) {
-			EmployeeEntity employee = employeeRepository.findById(employee_id).get();
-			List<LeaveEntity> leavesList = leaveRepository.findAll();
-			for (LeaveEntity iterator : leavesList) {
-				if (iterator.getEmployee().getEmployee_id().equals(employee.getEmployee_id())) {
-					leaveRepository.delete(iterator);
+	public boolean removeEmployee(String employee_id) throws DataIntegrityViolationException{
+		try {
+			if (employeeRepository.existsById(employee_id)) {
+				EmployeeEntity employee = employeeRepository.findById(employee_id).get();
+				List<LeaveEntity> leavesList = leaveRepository.findAll();
+				for (LeaveEntity iterator : leavesList) {
+					if (iterator.getEmployee().getEmployee_id().equals(employee.getEmployee_id())) {
+						leaveRepository.delete(iterator);
+					}
 				}
+				employeeRepository.delete(employee);
+				return true;
 			}
-			employeeRepository.delete(employee);
-			return true;
+		} catch (Exception e) {
+			throw new DataIntegrityViolationException("Unable to delete employee");
 		}
 		return false;
 	}
@@ -83,28 +90,29 @@ public class AdminService {
 	}
 
 	public EmployeeEntity viewEmployeeDetails(String employee_id) {
-		
+
 		if (employeeRepository.existsById(employee_id)) {
 			employee = employeeRepository.findById(employee_id).get();
 			employee.setPF(employee.getSalary() * (0.05));
 			return employee;
 		}
 		return null;
-		
+
 	}
 
 	public List<EmployeeEntity> viewEmployeesOfManager(String manager_id) {
-		
+
 		if (employeeRepository.existsById(manager_id)) {
 			return employeeRepository.getEmployeesOfManager(manager_id);
 		}
 		return null;
-		
+
 	}
 
 	public List<EmployeeEntity> viewEmployeesBySalary(double salaryFrom, double salaryTo) {
 		return employeeRepository.getEmployeesBySalary(salaryFrom, salaryTo);
 	}
+
 	public static String createUsername() {
 		return "UN" + new SecureRandom().nextInt() % 100000;
 	}

@@ -34,9 +34,4 @@ public class DepartmentEntity implements Serializable {
 		this.department_name = department_name;
 	}
 
-	@Override
-	public String toString() {
-		return "DepartmentEntity [department_id=" + department_id + ", department_name=" + department_name + "]";
-	}
-
 }

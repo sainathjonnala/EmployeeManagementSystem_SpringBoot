@@ -136,12 +136,5 @@ public class EmployeeEntity implements Serializable {
 	public void setManager_id(String manager_id) {
 		this.manager_id = manager_id;
 	}
-
-	@Override
-	public String toString() {
-		return "EmployeeEntity [employee_id=" + employee_id + ", first_name=" + first_name + ", department="
-				+ department + ", leave_balance=" + leave_balance + ", login=" + login + "]";
-	}
-
 	
 }

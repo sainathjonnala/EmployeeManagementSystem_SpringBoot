@@ -1,6 +1,5 @@
 package com.comakeit.spring.controllers;
 
-import java.security.SecureRandom;
 import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.comakeit.spring.constants.Constant;
 import com.comakeit.spring.entities.DepartmentEntity;
 import com.comakeit.spring.entities.EmployeeEntity;
-import com.comakeit.spring.entities.LeaveBalanceEntity;
 import com.comakeit.spring.entities.LoginEntity;
 import com.comakeit.spring.entities.RoleEntity;
 

@@ -146,6 +146,5 @@ public class EmployeeLeaveService {
 	public static String createLeaveId() {
 		return "LV" + new SecureRandom().nextInt() % 100000;
 	}
-
-
+	
 }

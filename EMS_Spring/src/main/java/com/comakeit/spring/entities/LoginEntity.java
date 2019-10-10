@@ -15,6 +15,7 @@ public class LoginEntity implements Serializable {
 	private static final long serialVersionUID = 2101554917156304667L;
 
 	@Id
+	@Column(length = 20)
 	private String username;
 
 	@Column(length = 15)
@@ -45,11 +46,6 @@ public class LoginEntity implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	@Override
-	public String toString() {
-		return "LoginEntity [username=" + username + ", password=" + password + ", role=" + role + "]";
 	}
 
 }

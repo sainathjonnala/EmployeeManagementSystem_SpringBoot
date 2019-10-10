@@ -2,6 +2,7 @@ package com.comakeit.spring.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,9 @@ public class LeaveBalanceEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column(length = 3)
 	private int casual_leaves;
+	@Column(length = 3)
 	private int loss_of_pay;
 
 	public int getId() {

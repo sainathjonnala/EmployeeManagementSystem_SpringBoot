@@ -36,9 +36,4 @@ public class RoleEntity implements Serializable {
 		this.role_name = role_name;
 	}
 
-	@Override
-	public String toString() {
-		return "RoleEntity [role_id=" + role_id + ", role_name=" + role_name + "]";
-	}
-
 }
