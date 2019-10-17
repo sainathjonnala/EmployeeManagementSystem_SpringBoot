@@ -5,6 +5,7 @@ import java.time.Period;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.comakeit.spring.entities.LeaveBalanceEntity;
@@ -137,6 +138,15 @@ public class EmployeeLeaveService {
 
 	public List<LeaveEntity> getAppliedLeavesOfEmployee(String employee_id) {
 		return leaveRepository.getAppliedLeavesOfEmployee(employee_id);
+	}
+	
+	@Scheduled(cron = "0 0 * ? * *")//every hour
+	public void leaveAvailed() {
+		leavesList = leaveRepository.getAvailedLeaves();
+		for(LeaveEntity l : leavesList) {
+			l.setStatus("availed");
+		}
+		leaveRepository.saveAll(leavesList);
 	}
 
 	public LeaveBalanceEntity getLeaveBalance(String employee_id) {

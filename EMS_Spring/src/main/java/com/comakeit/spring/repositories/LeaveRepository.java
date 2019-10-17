@@ -27,5 +27,8 @@ public interface LeaveRepository extends JpaRepository<LeaveEntity, String> {
 
 	@Query("select l from LeaveEntity l where l.employee.employee_id =:employee_id AND (l.status='pending' OR l.status='approved') AND CURRENT_DATE() < l.from_date ORDER BY l.from_date")
 	public List<LeaveEntity> getAppliedLeavesOfEmployee(@Param("employee_id") String employee_id);
+	
+	@Query("select l from LeaveEntity l where l.to_date < CURRENT_DATE() AND l.status='approved' ")
+	public List<LeaveEntity> getAvailedLeaves();
 
 }
