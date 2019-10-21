@@ -46,17 +46,17 @@ public class LeaveRest {
 		return employeeLeaveService.getLeaveRequests(employee_id);
 	}
 
-	@RequestMapping(value = "/viewLeaves/{employee_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/leaves/{employee_id}", method = RequestMethod.GET)
 	public List<LeaveEntity> viewLeavesOfEmployee(@PathVariable String employee_id) {
 		return employeeLeaveService.getLeavesOfEmployee(employee_id);
 	}
 
-	@RequestMapping(value = "/viewAppliedLeaves/{employee_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/appliedLeaves/{employee_id}", method = RequestMethod.GET)
 	public List<LeaveEntity> viewAppliedLeavesOfEmployee(@PathVariable String employee_id) {
 		return employeeLeaveService.getAppliedLeavesOfEmployee(employee_id);
 	}
 
-	@RequestMapping(value = "/viewLeaveBalance/{employee_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/leaveBalance/{employee_id}", method = RequestMethod.GET)
 	public LeaveBalanceEntity viewLeaveBalance(@PathVariable String employee_id) {
 		return employeeLeaveService.getLeaveBalance(employee_id);
 	}
