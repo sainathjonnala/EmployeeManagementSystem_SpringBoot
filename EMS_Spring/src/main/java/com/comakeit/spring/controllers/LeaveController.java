@@ -49,7 +49,7 @@ public class LeaveController {
 	@RequestMapping(value = "/viewLeaves", method = RequestMethod.GET)
 	public ModelAndView viewLeavesOfEmployee(@SessionAttribute("employee") EmployeeEntity employee) {
 
-		leavesList = restTemplate.exchange(Constant.url + "/EMS/viewLeaves/" + employee.getEmployee_id(),
+		leavesList = restTemplate.exchange(Constant.url + "/EMS/leaves/" + employee.getEmployee_id(),
 				HttpMethod.GET, null, new ParameterizedTypeReference<List<LeaveEntity>>() {
 				});
 
@@ -62,7 +62,7 @@ public class LeaveController {
 	@RequestMapping(value = "/viewAppliedLeaves", method = RequestMethod.GET)
 	public ModelAndView viewAppliedLeavesOfEmployee(@SessionAttribute("employee") EmployeeEntity employee) {
 
-		leavesList = restTemplate.exchange(Constant.url + "/EMS/viewAppliedLeaves/" + employee.getEmployee_id(),
+		leavesList = restTemplate.exchange(Constant.url + "/EMS/appliedLeaves/" + employee.getEmployee_id(),
 				HttpMethod.GET, null, new ParameterizedTypeReference<List<LeaveEntity>>() {
 				});
 
@@ -76,7 +76,7 @@ public class LeaveController {
 
 		restTemplate.put(Constant.url + "/EMS/rejectLeave", leave);
 
-		modelView.setViewName("/viewLeaveRequests");
+		modelView.setViewName("/leaveRequests");
 		return modelView;
 	}
 
@@ -84,7 +84,7 @@ public class LeaveController {
 	public ModelAndView acceptLeaveRequest(LeaveEntity leave) {
 
 		restTemplate.put(Constant.url + "/EMS/acceptLeave", leave);
-		modelView.setViewName("/viewLeaveRequests");
+		modelView.setViewName("/leaveRequests");
 		return modelView;
 	}
 
@@ -111,7 +111,7 @@ public class LeaveController {
 	public ModelAndView viewLeaveBalance(@SessionAttribute("employee") EmployeeEntity employee) {
 
 		LeaveBalanceEntity leaveBalance = restTemplate.getForObject(
-				Constant.url + "/EMS/viewLeaveBalance/" + employee.getEmployee_id(), LeaveBalanceEntity.class);
+				Constant.url + "/EMS/leaveBalance/" + employee.getEmployee_id(), LeaveBalanceEntity.class);
 		modelView.setViewName("EmployeeHomePage.jsp?action=view_leave_balance");
 		modelView.addObject("leaveBalance", leaveBalance);
 		return modelView;
